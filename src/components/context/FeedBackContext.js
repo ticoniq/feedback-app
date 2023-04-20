@@ -27,26 +27,33 @@ export const FeedBackProvider = ({ children }) => {
     edit: false,
   });
 
-  // Delete feedback 
+  // Delete feedback
   const deleteFeedback = (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
       setFeedback(feedback.filter((item) => item.id !== id));
     }
   };
 
-  // add feedback 
+  // add feedback
   const addFeedback = (newFeedback) => {
     newFeedback.id = uuidv4;
     // console.log(newFeedback);
     setFeedback([newFeedback, ...feedback]);
   };
 
-  // Set item to be updated 
+  // Set item to be updated
   const editFeedback = (item) => {
     setFeedbackEdit({
       item,
       edit: true,
-    })
+    });
+  };
+
+  // Update feedback form
+  const updateFeedback = (id, updItem) => {
+    setFeedback(
+      feedback.map((item) => (item.id === id ? { ...item, ...updItem } : item))
+    )
   }
 
   return (
@@ -56,6 +63,8 @@ export const FeedBackProvider = ({ children }) => {
         deleteFeedback,
         addFeedback,
         editFeedback,
+        feedbackEdit,
+        updateFeedback,
       }}
     >
       {children}
